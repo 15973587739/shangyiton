@@ -11,6 +11,12 @@
     <groupId>com.atguigu</groupId>
     <artifactId>yygh_parent</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>common</module>
+        <module>common/common-util</module>
+        <module>common/service-util</module>
+        <module>common/common-util</module>
+    </modules>
     <version>0.0.1-SNAPSHOT</version>
     <name>yygh_parent</name>
     <description>yygh_parent</description>
