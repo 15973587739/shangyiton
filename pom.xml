@@ -16,6 +16,7 @@
         <module>common/common-util</module>
         <module>common/service-util</module>
         <module>common/common-util</module>
+        <module>model</module>
     </modules>
     <version>0.0.1-SNAPSHOT</version>
     <name>yygh_parent</name>
