@@ -9,5 +9,15 @@ export default defineConfig({
     alias:{
       "@":path.resolve(__dirname,'src')
     }
+  },
+  //配置代理跨域
+  server:{
+    proxy:{
+      '/api':{
+        target:'127.0.0.1:80',
+        changeOrigin:true,
+        rewrite:(path)=>path.replace(/^\/api/,''),
+      },
+    }
   }
 })
