@@ -36,6 +36,13 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!--java: JPS 增量注解进程已禁用。部分重新编译的编译结果可能不准确。使用构建进程“jps.track.ap.dependencies”VM 标志启用/禁用增量注解处理环境。-->
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>annotations</artifactId>
+            <version>6.0.3</version>
+        </dependency>
         <!--  暂时用不着-->
 
         <!-- 服务调用feign -->
