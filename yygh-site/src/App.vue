@@ -12,7 +12,13 @@
   </div>
 </template>
 <script setup lang="ts">
-
+  import request from "@/utils/request";
+  import { onMounted } from 'vue'
+  onMounted(()=>{
+    request.get('/index.jsp').then(res=>{
+      console.log('Appwdad',res);
+    })
+  })
 </script>
 <style scoped lang="scss">
 .container {

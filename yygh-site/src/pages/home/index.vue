@@ -24,12 +24,15 @@
                     :total="13"
             />
         </el-col>
-        <el-col :span="4">456</el-col>
+        <el-col :span="4">
+            <Tip/>
+        </el-col>
     </el-row>
 
 </template>
 
 <script setup lang="ts">
+    import Tip from './tip/index.vue';
     // 引入首页轮播图
     import Carousel from './carousel/index.vue'
     //引入搜索组件
