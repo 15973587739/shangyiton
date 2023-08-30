@@ -1,4 +1,4 @@
-package com.atguigu.yygh.model.hosp;
+package com.atguigu.yygh.hosp.eitity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

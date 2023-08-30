@@ -14,6 +14,11 @@
             <groupId>com.atguigu</groupId>
             <artifactId>model</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.2</version>
             <scope>compile</scope>
         </dependency>
 
