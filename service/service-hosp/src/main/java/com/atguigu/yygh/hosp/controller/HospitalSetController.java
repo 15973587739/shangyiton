@@ -1,6 +1,6 @@
 package com.atguigu.yygh.hosp.controller;
 
-import com.atguigu.yygh.common.MD5;
+import com.atguigu.yygh.common.utility.MD5;
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.model.hosp.HospitalSet;
 //import com.atguigu.yygh.hosp.eitity.HospitalSet;

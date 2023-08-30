@@ -1,4 +1,4 @@
-package com.atguigu.yygh.common;
+package com.atguigu.yygh.common.utility;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
