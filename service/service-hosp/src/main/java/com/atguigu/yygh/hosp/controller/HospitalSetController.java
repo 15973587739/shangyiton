@@ -1,5 +1,6 @@
 package com.atguigu.yygh.hosp.controller;
 
+import com.atguigu.yygh.common.MD5;
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.model.hosp.HospitalSet;
 //import com.atguigu.yygh.hosp.eitity.HospitalSet;
@@ -74,22 +75,22 @@ public class HospitalSetController {
         return Result.ok(pageHospitalSet);
     }
 
-//    //4 添加医院设置
-//    @PostMapping("saveHospitalSet")
-//    public Result saveHospitalSet(@RequestBody HospitalSet hospitalSet) {
-//        //设置状态 1 使用 0 不能使用
-//        hospitalSet.setStatus(1);
-//        //签名秘钥
-//        Random random = new Random();
-//        hospitalSet.setSignKey(MD5.encrypt(System.currentTimeMillis()+""+random.nextInt(1000)));
-//        //调用service
-//        boolean save = hospitalSetService.save(hospitalSet);
-//        if(save) {
-//            return Result.ok();
-//        } else {
-//            return Result.fail();
-//        }
-//    }
+    //4 添加医院设置
+    @PostMapping("saveHospitalSet")
+    public Result saveHospitalSet(@RequestBody HospitalSet hospitalSet) {
+        //设置状态 1 使用 0 不能使用
+        hospitalSet.setStatus(1);
+        //签名秘钥
+        Random random = new Random();
+        hospitalSet.setSignKey(MD5.encrypt(System.currentTimeMillis()+""+random.nextInt(1000)));
+        //调用service
+        boolean save = hospitalSetService.save(hospitalSet);
+        if(save) {
+            return Result.ok();
+        } else {
+            return Result.fail();
+        }
+    }
 
     //5 根据id获取医院设置
     @GetMapping("getHospSet/{id}")
