@@ -2,6 +2,7 @@ package com.atguigu.yygh.cmn.service.impl;
 
 
 import com.alibaba.excel.EasyExcel;
+import com.atguigu.yygh.cmn.listener.DictListener;
 import com.atguigu.yygh.cmn.mapper.DictMapper;
 import com.atguigu.yygh.cmn.service.DictService;
 import com.atguigu.yygh.model.cmn.Dict;
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.util.List;
 
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
+
+
 
     //根据数据id查询子数据列表
     @Override
@@ -35,6 +39,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         return dictList;
     }
 
+    //导出数据
     @Override
     public void exportDictData(HttpServletResponse response) {
 
@@ -57,6 +62,18 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
             //调用方法进行写操作
             EasyExcel.write(response.getOutputStream(), DictEeVo.class).sheet("dict")
                     .doWrite(dictEeVoList);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //导入数据字典
+    @Override
+    public void importDictData(MultipartFile file) {
+        try {
+//            file.getInputStream()输入流用于读取表格数据，读取表格中的数据为DictEeVo类型，DictListener监听器用于处理
+//            baseMapper自定义了有参构造函数需要操作数据库
+            EasyExcel.read(file.getInputStream(),DictEeVo.class,new DictListener(baseMapper)).sheet().doRead();
         }catch (IOException e){
             e.printStackTrace();
         }
