@@ -29,6 +29,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public void save(Map<String, Object> paramMap) {
+        //把参数map集合转换成Hospital对象
         log.info(JSONObject.toJSONString(paramMap));
         Hospital hospital = JSONObject.parseObject(JSONObject.toJSONString(paramMap),Hospital.class);
         //判断是否存在
@@ -38,6 +39,7 @@ public class HospitalServiceImpl implements HospitalService {
             hospital.setCreateTime(targetHospital.getCreateTime());
             hospital.setUpdateTime(new Date());
             hospital.setIsDeleted(0);
+            //如果存在就进行修改
             hospitalRepository.save(hospital);
         } else {
             //0：未上线 1：已上线
@@ -45,6 +47,7 @@ public class HospitalServiceImpl implements HospitalService {
             hospital.setCreateTime(new Date());
             hospital.setUpdateTime(new Date());
             hospital.setIsDeleted(0);
+            //不存在进行添加
             hospitalRepository.save(hospital);
         }
     }
