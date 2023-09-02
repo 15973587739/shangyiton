@@ -19,6 +19,7 @@ import java.util.Random;
 
 @Api(tags = "医院设置管理")
 @RestController
+@CrossOrigin
 @RequestMapping("/admin/hosp/hospitalSet")
 public class HospitalSetController {
 
@@ -53,6 +54,7 @@ public class HospitalSetController {
 
     //3 条件查询带分页
     @PostMapping("findPageHospSet/{current}/{limit}")
+//    @RequestMapping("findPageHospSet/{current}/{limit}")
     public Result findPageHospSet(@PathVariable long current,
                                   @PathVariable long limit,
                                   @RequestBody
@@ -60,9 +62,13 @@ public class HospitalSetController {
         //创建page对象，传递当前页，每页记录数
         Page<HospitalSet> page = new Page<>(current,limit);
         //构建条件
+        String hosname = "";
+        String hoscode = "";
         QueryWrapper<HospitalSet> wrapper = new QueryWrapper<>();
-        String hosname = hospitalSetQueryVo.getHosname();//医院名称
-        String hoscode = hospitalSetQueryVo.getHoscode();//医院编号
+        if(hospitalSetQueryVo != null){
+            hosname = hospitalSetQueryVo.getHosname();//医院名称
+            hoscode = hospitalSetQueryVo.getHoscode();//医院编号
+        }
         if(!StringUtils.isEmpty(hosname)) {
             wrapper.like("hosname",hospitalSetQueryVo.getHosname());
         }
