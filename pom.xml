@@ -19,6 +19,16 @@
         <module>service</module>
         <module>service-client</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+    </dependencies>
     <version>0.0.1-SNAPSHOT</version>
     <name>yygh_parent</name>
     <description>yygh_parent</description>

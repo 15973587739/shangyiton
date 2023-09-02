@@ -13,16 +13,16 @@ import com.atguigu.yygh.hosp.service.ScheduleService;
 import com.atguigu.yygh.model.hosp.Department;
 import com.atguigu.yygh.model.hosp.Schedule;
 import com.atguigu.yygh.vo.hosp.DepartmentQueryVo;
+import com.atguigu.yygh.vo.hosp.DepartmentVo;
 import com.atguigu.yygh.vo.hosp.ScheduleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Api(tags = "医院管理API接口")
@@ -249,6 +249,46 @@ public class ApiController {
         scheduleService.remove(hoscode, hosScheduleId);
         return Result.ok();
     }
+
+    @RestController
+    @RequestMapping("/admin/hosp/department")
+    @CrossOrigin
+    public class DepartmentController {
+
+        @Autowired
+        private DepartmentService departmentService;
+
+        //根据医院编号，查询医院所有科室列表
+        @ApiOperation(value = "查询医院所有科室列表")
+        @GetMapping("getDeptList/{hoscode}")
+        public Result getDeptList(@PathVariable String hoscode) {
+            List<DepartmentVo> list = departmentService.findDeptTree(hoscode);
+            return Result.ok(list);
+        }
+    }
+
+    //根据医院编号 和 科室编号 ，查询排班规则数据
+    @ApiOperation(value ="查询排班规则数据")
+    @GetMapping("getScheduleRule/{page}/{limit}/{hoscode}/{depcode}")
+    public Result getScheduleRule(@PathVariable long page,
+                                  @PathVariable long limit,
+                                  @PathVariable String hoscode,
+                                  @PathVariable String depcode) {
+        Map<String,Object> map
+                = scheduleService.getRuleSchedule(page,limit,hoscode,depcode);
+        return Result.ok(map);
+    }
+
+    //根据医院编号 、科室编号和工作日期，查询排班详细信息
+    @ApiOperation(value = "查询排班详细信息")
+    @GetMapping("getScheduleDetail/{hoscode}/{depcode}/{workDate}")
+    public Result getScheduleDetail( @PathVariable String hoscode,
+                                     @PathVariable String depcode,
+                                     @PathVariable String workDate) {
+        List<Schedule> list = scheduleService.getDetailSchedule(hoscode,depcode,workDate);
+        return Result.ok(list);
+    }
+
 
 
 
