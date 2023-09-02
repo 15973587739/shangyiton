@@ -25,6 +25,12 @@
             <artifactId>spring-data-mongodb</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.atguigu</groupId>
+            <artifactId>service-cmn-client</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
         </dependency>

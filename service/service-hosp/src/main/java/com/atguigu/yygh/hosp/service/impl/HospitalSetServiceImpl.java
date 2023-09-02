@@ -4,7 +4,6 @@ package com.atguigu.yygh.hosp.service.impl;
 import com.atguigu.yygh.common.exception.YyghException;
 import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.model.hosp.HospitalSet;
-//import com.atguigu.yygh.hosp.eitity.HospitalSet;
 import com.atguigu.yygh.hosp.mapper.HospitalSetMapper;
 import com.atguigu.yygh.hosp.service.HospitalSetService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -17,6 +16,8 @@ public class HospitalSetServiceImpl  extends ServiceImpl<HospitalSetMapper, Hosp
 
     @Autowired
     private HospitalSetMapper hospitalSetMapper;
+
+
 
     @Override
     public String getSignKey(String hoscode) {

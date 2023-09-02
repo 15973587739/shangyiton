@@ -9,6 +9,10 @@
     <artifactId>service-client</artifactId>
     <version>1.0</version>
     <name>service-client</name>
+    <modules>
+        <module>service-cmn-client</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <dependencies>
         <!--        导入实体服务依赖-->
@@ -29,18 +33,21 @@
             <version>1.0</version>
         </dependency>
 
+
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <scope>provided </scope>
         </dependency>
 
-<!--        &lt;!&ndash; 服务调用feign &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
-<!--            <scope>provided </scope>-->
-<!--        </dependency>-->
+        <!-- 服务调用feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <scope>provided </scope>
+        </dependency>
 
     </dependencies>
 

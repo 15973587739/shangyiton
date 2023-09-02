@@ -2,6 +2,7 @@ package com.atguigu.yygh.hosp.controller;
 
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.hosp.service.HospitalService;
+import com.atguigu.yygh.model.hosp.Hospital;
 import com.atguigu.yygh.vo.hosp.HospitalQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Api(tags = "医院管理接口")
 @RestController
@@ -33,5 +37,26 @@ public class HospitalController {
             HospitalQueryVo hospitalQueryVo) {
         return Result.ok(hospitalService.selectPage(page, limit, hospitalQueryVo));
     }
+
+    @ApiOperation(value = "更新上线状态")
+    @GetMapping("updateStatus/{id}/{status}")
+    public Result lock(
+            @ApiParam(name = "id", value = "医院id", required = true)
+            @PathVariable("id") String id,
+            @ApiParam(name = "status", value = "状态（0：未上线 1：已上线）", required = true)
+            @PathVariable("status") Integer status){
+        hospitalService.updateStatus(id, status);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "获取医院详情")
+    @GetMapping("show/{id}")
+    public Result show(
+            @ApiParam(name = "id", value = "医院id", required = true)
+            @PathVariable String id) {
+        return Result.ok(hospitalService.show(id));
+    }
+
+
 
 }

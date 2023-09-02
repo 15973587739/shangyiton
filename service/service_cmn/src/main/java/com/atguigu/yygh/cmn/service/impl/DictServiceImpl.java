@@ -86,6 +86,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
     }
 
+
     //判断id下是否有子数据
     private  boolean isChildren(Long id){
         QueryWrapper<Dict> wrapper = new QueryWrapper<>();
@@ -95,24 +96,39 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         return count>0;
     }
 
-//    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
-//    @Override
-//    public String getNameByParentDictCodeAndValue(String parentDictCode, String value) {
-//        //如果value能唯一定位数据字典，parentDictCode可以传空，例如：省市区的value值能够唯一确定
-//        if(StringUtils.isEmpty(parentDictCode)) {
-//            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("value", value));
-//            if(null != dict) {
-//                return dict.getName();
-//            }
-//        } else {
-//            Dict parentDict = this.getByDictsCode(parentDictCode);
-//            if(null == parentDict) return "";
-//            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("parent_id", parentDict.getId()).eq("value", value));
-//            if(null != dict) {
-//                return dict.getName();
-//            }
-//        }
-//        return "";
-//    }
+    private Dict getByDictCode(String dictCode){
+        QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+        wrapper.eq("dict_code",dictCode);
+        Dict dict =  baseMapper.selectOne(wrapper);
+        return dict;
+    }
+
+    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
+    @Override
+    public String getNameByParentDictCodeAndValue(String parentDictCode, String value) {
+        //如果value能唯一定位数据字典，parentDictCode可以传空，例如：省市区的value值能够唯一确定
+        if(StringUtils.isEmpty(parentDictCode)) {
+            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("value", value));
+            if(null != dict) {
+                return dict.getName();
+            }
+        } else {
+            Dict parentDict = this.getByDictCode(parentDictCode);
+            if(null == parentDict) return "";
+            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("parent_id", parentDict.getId()).eq("value", value));
+            if(null != dict) {
+                return dict.getName();
+            }
+        }
+        return "";
+    }
+
+    @Override
+    public List<Dict> findByDictCode(String dictCode) {
+        Dict codeDict = this.getByDictCode(dictCode);
+        if(null == codeDict) return null;
+        return this.findChildDate(codeDict.getId());
+    }
+
 
 }
