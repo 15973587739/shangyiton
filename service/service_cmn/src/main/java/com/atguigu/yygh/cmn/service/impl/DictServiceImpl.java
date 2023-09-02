@@ -5,18 +5,17 @@ import com.alibaba.excel.EasyExcel;
 import com.atguigu.yygh.cmn.listener.DictListener;
 import com.atguigu.yygh.cmn.mapper.DictMapper;
 import com.atguigu.yygh.cmn.service.DictService;
-import com.atguigu.yygh.common.config.RedisConfig;
-import com.atguigu.yygh.common.config.Swagger2Config;
 import com.atguigu.yygh.model.cmn.Dict;
 import com.atguigu.yygh.vo.cmn.DictEeVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.Cacheable;
+
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,12 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "DictService")
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
+    
 
     //根据数据id查询子数据列表
-    @Cacheable(value = "dict")
-//    @Cacheable(value = "dict")  //缓存注解
+    @Cacheable(value = "dict",keyGenerator = "keyGenerator") //缓存注解
     @Override
     public List<Dict> findChildDate(Long id) {
         QueryWrapper<Dict> wrapper = new QueryWrapper<>();
