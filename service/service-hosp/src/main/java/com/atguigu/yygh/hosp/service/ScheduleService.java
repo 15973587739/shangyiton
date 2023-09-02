@@ -1,14 +1,14 @@
 package com.atguigu.yygh.hosp.service;
 
-import com.atguigu.yygh.model.hosp.Department;
-import com.atguigu.yygh.vo.hosp.DepartmentQueryVo;
+import com.atguigu.yygh.model.hosp.Schedule;
+import com.atguigu.yygh.vo.hosp.ScheduleQueryVo;
 import org.springframework.data.domain.Page;
 
 import java.util.Map;
 
-public interface DepartmentService {
+public interface ScheduleService {
     /**
-     * 上传科室信息
+     * 上传排班信息
      * @param paramMap
      */
     void save(Map<String, Object> paramMap);
@@ -17,17 +17,17 @@ public interface DepartmentService {
      * 分页查询
      * @param page 当前页码
      * @param limit 每页记录数
-     * @param departmentQueryVo 查询条件
+     * @param scheduleQueryVo 查询条件
      * @return
      */
-    Page<Department> selectPage(Integer page, Integer limit, DepartmentQueryVo departmentQueryVo);
+    Page<Schedule> selectPage(Integer page, Integer limit, ScheduleQueryVo scheduleQueryVo);
 
     /**
      * 删除科室
      * @param hoscode
-     * @param depcode
+     * @param hosScheduleId
      */
-    void remove(String hoscode, String depcode);
+    void remove(String hoscode, String hosScheduleId);
 
 
 }
