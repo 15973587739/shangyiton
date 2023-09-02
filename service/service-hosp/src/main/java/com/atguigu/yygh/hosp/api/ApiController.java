@@ -76,31 +76,7 @@ public class ApiController {
         return Result.ok();
     }
 
-//    @ApiOperation(value = "上传医院")
-//    @PostMapping("saveHospital")
-//    public Result saveHospital(HttpServletRequest request) {
-//        Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
-//        String hospSign =(String) paramMap.get("sign");
-//        //必须参数校验 略
-//        String hoscode = (String)paramMap.get("hoscode");
-//        if(StringUtils.isEmpty(hoscode)) {
-//            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
-//        }
-//        //传输过程中“+”转换为了“ ”，因此我们要转换回来
-//        String logoDataString = (String)paramMap.get("logoData");
-//        if(!StringUtils.isEmpty(logoDataString)) {
-//            String logoData = logoDataString.replaceAll("", "+");
-//            paramMap.put("logoData", logoData);
-//        }
-//
-//        //签名校验
-//        if(!HttpRequestHelper.isSignEquals(paramMap, hospitalSetService.getSignKey(hoscode))) {
-//            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
-//        }
-//
-//        hospitalService.save(paramMap);
-//        return Result.ok();
-//    }
+
 
 
     @ApiOperation(value = "获取医院信息")

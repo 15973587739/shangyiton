@@ -137,19 +137,5 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 }
 
-//      缺个BeanUtils
-//    public void save(Map<String, Object> paramMap) {
-//        Department department = JSONObject.parseObject(JSONObject.toJSONString(paramMap), Department.class);
-//        Department targetDepartment = departmentRepository.getDepartmentByHoscodeAndDepcode(department.getHoscode(), department.getDepcode());
-//        if(null != targetDepartment) {
-//            //copy不为null的值，该方法为自定义方法
-//            BeanUtils.copyBean(department, targetDepartment, Department.class);
-//            departmentRepository.save(targetDepartment);
-//        } else {
-//            department.setCreateTime(new Date());
-//            department.setUpdateTime(new Date());
-//            department.setIsDeleted(0);
-//            departmentRepository.save(department);
-//        }
-//    }
+
 
