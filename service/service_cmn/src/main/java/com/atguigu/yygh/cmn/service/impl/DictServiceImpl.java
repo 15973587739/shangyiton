@@ -2,6 +2,7 @@ package com.atguigu.yygh.cmn.service.impl;
 
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.util.StringUtils;
 import com.atguigu.yygh.cmn.listener.DictListener;
 import com.atguigu.yygh.cmn.mapper.DictMapper;
 import com.atguigu.yygh.cmn.service.DictService;
@@ -26,7 +27,7 @@ import java.util.List;
 @CacheConfig(cacheNames = "DictService")
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
-    
+
 
     //根据数据id查询子数据列表
     @Cacheable(value = "dict",keyGenerator = "keyGenerator") //缓存注解
@@ -93,5 +94,25 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         //如果有数据就返回true
         return count>0;
     }
+
+//    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
+//    @Override
+//    public String getNameByParentDictCodeAndValue(String parentDictCode, String value) {
+//        //如果value能唯一定位数据字典，parentDictCode可以传空，例如：省市区的value值能够唯一确定
+//        if(StringUtils.isEmpty(parentDictCode)) {
+//            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("value", value));
+//            if(null != dict) {
+//                return dict.getName();
+//            }
+//        } else {
+//            Dict parentDict = this.getByDictsCode(parentDictCode);
+//            if(null == parentDict) return "";
+//            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("parent_id", parentDict.getId()).eq("value", value));
+//            if(null != dict) {
+//                return dict.getName();
+//            }
+//        }
+//        return "";
+//    }
 
 }
