@@ -68,5 +68,10 @@ public class HospitalServiceImpl implements HospitalService {
 
         return pages;
     }
+    @Override
+    public Hospital getByHoscode(String hoscode) {
+        return hospitalRepository.getHospitalByHoscode(hoscode);
+    }
+
 
 }

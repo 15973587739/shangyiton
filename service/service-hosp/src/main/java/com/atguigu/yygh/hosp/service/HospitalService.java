@@ -24,5 +24,11 @@ public interface HospitalService {
      */
     Page<Hospital> selectPage(Integer page, Integer limit, HospitalQueryVo hospitalQueryVo);
 
+    /**
+     * 查询医院
+     * @param hoscode
+     * @return
+     */
+    Hospital getByHoscode(String hoscode);
 
 }
