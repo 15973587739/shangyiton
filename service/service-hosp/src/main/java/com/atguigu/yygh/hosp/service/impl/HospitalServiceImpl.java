@@ -127,5 +127,15 @@ public class HospitalServiceImpl implements HospitalService {
         return result;
     }
 
+    @Override
+    public String getHospName(String hoscode) {
+        Hospital hospital = hospitalRepository.getHospitalByHoscode(hoscode);
+        if(null != hospital) {
+            return hospital.getHosname();
+        }
+        return "";
+    }
+
+
 
 }

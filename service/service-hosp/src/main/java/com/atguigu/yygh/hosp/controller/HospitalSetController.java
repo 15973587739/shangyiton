@@ -29,7 +29,7 @@ public class HospitalSetController {
 
 
 
-  //1 查询医院设置表所有信息
+    //1 查询医院设置表所有信息
     @ApiOperation(value = "获取所有医院设置")
     @GetMapping("findAll")
     public Result findAllHospitalSet() {
