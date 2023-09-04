@@ -117,6 +117,7 @@ public class ApiController {
     @ApiOperation(value = "获取分页列表")
     @PostMapping("department/list")
     public Result department(HttpServletRequest request) {
+        //获取相关参数集合
         Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
         //必须参数校验 略
         String hoscode = (String)paramMap.get("hoscode");

@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         //根据医院编号 和 科室编号查询
         Department departmentExist = departmentRepository.
                 getDepartmentByHoscodeAndDepcode(department.getHoscode(), department.getDepcode());
-        //判断
+        //判断如果有就进行修改没有就进行添加
         if (departmentExist != null) {
             departmentExist.setUpdateTime(new Date());
             departmentExist.setIsDeleted(0);
