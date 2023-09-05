@@ -2,6 +2,7 @@ package com.atguigu.yygh.hosp.controller;
 
 import com.atguigu.yygh.common.utility.MD5;
 import com.atguigu.yygh.common.result.Result;
+import com.atguigu.yygh.model.hosp.Hospital;
 import com.atguigu.yygh.model.hosp.HospitalSet;
 //import com.atguigu.yygh.hosp.eitity.HospitalSet;
 import com.atguigu.yygh.hosp.service.HospitalSetService;
@@ -40,11 +41,17 @@ public class HospitalSetController {
 
 
 
-    //2 逻辑删除医院设置
+
     @ApiOperation(value = "逻辑删除医院设置")
     @DeleteMapping("{id}")
     public Result removeHospSet(@PathVariable Long id) {
-        boolean flag = hospitalSetService.removeById(id);
+        //物理删除
+        HospitalSet hospitalSet =new HospitalSet();
+        hospitalSet.setId(id);
+        hospitalSet.setIsDelete(1);
+        boolean flag = hospitalSetService.updateById(hospitalSet);
+        //2 逻辑删除医院设置
+//        boolean flag = hospitalSetService.removeById(id);
         if(flag) {
             return Result.ok();
         } else {
@@ -75,6 +82,7 @@ public class HospitalSetController {
         if(!StringUtils.isEmpty(hoscode)) {
             wrapper.eq("hoscode",hospitalSetQueryVo.getHoscode());
         }
+        wrapper.eq("is_deleted",0);
         //调用方法实现分页查询
         Page<HospitalSet> pageHospitalSet = hospitalSetService.page(page, wrapper);
         //返回结果
@@ -119,7 +127,28 @@ public class HospitalSetController {
     //7 批量删除医院设置
     @DeleteMapping("batchRemove")
     public Result batchRemoveHospitalSet(@RequestBody List<Long> idList) {
-        hospitalSetService.removeByIds(idList);
+        //物理删除
+        HospitalSet hospitalSet = new HospitalSet();
+        hospitalSet.setIsDelete(1);
+        for (int i = 0 ; i < idList.size() ; i++ ){
+            hospitalSet.setId(idList.get(i));
+            hospitalSetService.updateById(hospitalSet);
+        }
+        //逻辑删除
+//        hospitalSetService.removeByIds(idList);
+        return Result.ok();
+    }
+
+    //8 医院设置锁定和解锁
+    @PutMapping("lockHospitalSet/{id}/{status}")
+    public Result lockHospitalSet(@PathVariable Long id,
+                                  @PathVariable Integer status){
+        //根据id查询医院当前状态
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        //设置状态
+        hospitalSet.setStatus(status);
+        //调用方法
+        hospitalSetService.updateById(hospitalSet);
         return Result.ok();
     }
 }

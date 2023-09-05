@@ -1,6 +1,8 @@
 package com.atguigu.yygh.model.hosp;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +22,9 @@ public class HospitalSet {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "医院id")
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
 
     @ApiModelProperty(value = "医院名称")
@@ -49,6 +54,10 @@ public class HospitalSet {
     @ApiModelProperty(value = "状态")
     @TableField("status")
     private Integer status;
+
+    @ApiModelProperty(value = "是否删除")
+    @TableField("is_deleted")
+    private Integer isDelete;
 
 }
 
