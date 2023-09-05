@@ -25,5 +25,8 @@ public interface DictService extends IService<Dict> {
 
 
     public List<Dict> findByDictCode(String dictCode);
-
+    //根据dictCode和value查询
+    String getDictName(String dictCode, String value);
+    //根据value查询
+    String getDictName(String value);
 }

@@ -7,6 +7,5 @@
         <version>1.0</version>
     </parent>
     <artifactId>service-cmn-client</artifactId>
-    <name>Archetype - service-cmn-client</name>
-    <url>http://maven.apache.org</url>
+
 </project>

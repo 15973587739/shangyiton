@@ -22,6 +22,7 @@ public class DictController {
     @Autowired
     private DictService dictService;
 
+
     //导入数据字典接口
     @PostMapping("importData")
     public Result importDict(MultipartFile file){
@@ -52,6 +53,19 @@ public class DictController {
         return Result.ok(list);
     }
 
+    //根据dictCode和value查询
+    @GetMapping("getName/{dictCode}/{value}")
+    public String getName(@PathVariable String dictCode ,
+                          @PathVariable String value){
+        String dictName = dictService.getDictName(dictCode,value);
+        return dictName;
+    }
 
+    //根据value查询
+    @GetMapping("getName/{value}")
+    public String getName(@PathVariable String value){
+        String dictName = dictService.getDictName(value);
+        return dictName;
+    }
 
 }

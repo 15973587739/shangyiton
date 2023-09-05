@@ -130,5 +130,30 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         return this.findChildDate(codeDict.getId());
     }
 
+    @Override
+    public String getDictName(String dictCode, String value) {
+        //如果dictCode为空，直接根据value查询
+        if(StringUtils.isEmpty(dictCode)){
+            //直接根据value查询
+            QueryWrapper<Dict> queryWrapper =new QueryWrapper();
+            queryWrapper.eq("value",value);
+            Dict dict = baseMapper.selectOne(queryWrapper);
+            return dict.getName();
+        }else{
+            //根据dictCode和value查询
+            Dict dict =this.getByDictCode(dictCode);
+            Long id =dict.getId();
+            //根据parent_id和value查询
+            Dict finalDict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("parent_id",id).eq("value",value));
+            return finalDict.getName();
+        }
+    }
+
+
+    @Override
+    public String getDictName(String value) {
+        return this.getDictName("",value);
+    }
+
 
 }

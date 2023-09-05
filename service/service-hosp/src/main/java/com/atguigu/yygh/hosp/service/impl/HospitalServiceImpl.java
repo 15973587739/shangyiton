@@ -71,6 +71,7 @@ public class HospitalServiceImpl implements HospitalService {
         Example<Hospital> example = Example.of(hospital, matcher);
         Page<Hospital> pages = hospitalRepository.findAll(example, pageable);
 
+
         pages.getContent().stream().forEach(item ->{
             this.packHospital(item);
         });
@@ -93,7 +94,9 @@ public class HospitalServiceImpl implements HospitalService {
      * @return
      */
     private Hospital packHospital(Hospital hospital) {
+        //根据dictCode和value获取医院等级名称
         String hostypeString = dictFeignClient.getName(DictEnum.HOSTYPE.getDictCode(),hospital.getHostype());
+        //查询省市地区
         String provinceString = dictFeignClient.getName(hospital.getProvinceCode());
         String cityString = dictFeignClient.getName(hospital.getCityCode());
         String districtString = dictFeignClient.getName(hospital.getDistrictCode());

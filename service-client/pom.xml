@@ -8,11 +8,11 @@
     </parent>
     <artifactId>service-client</artifactId>
     <version>1.0</version>
-    <name>service-client</name>
+    <packaging>pom</packaging>
     <modules>
         <module>service-cmn-client</module>
     </modules>
-    <packaging>pom</packaging>
+
 
     <dependencies>
         <!--        导入实体服务依赖-->
