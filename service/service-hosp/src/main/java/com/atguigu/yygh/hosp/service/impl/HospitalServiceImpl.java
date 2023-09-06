@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -78,6 +75,7 @@ public class HospitalServiceImpl implements HospitalService {
         });
         return pages;
     }
+    //根据医院编号返回医院信息
     @Override
     public Hospital getByHoscode(String hoscode) {
         return hospitalRepository.getHospitalByHoscode(hoscode);
@@ -101,8 +99,9 @@ public class HospitalServiceImpl implements HospitalService {
         String provinceString = dictFeignClient.getName(hospital.getProvinceCode());
         String cityString = dictFeignClient.getName(hospital.getCityCode());
         String districtString = dictFeignClient.getName(hospital.getDistrictCode());
-
+        //封装医院等级（甲等、乙等....）
         hospital.getParam().put("hostypeString", hostypeString);
+        //封装地址
         hospital.getParam().put("fullAddress", provinceString + cityString + districtString + hospital.getAddress());
         return hospital;
     }
@@ -143,11 +142,30 @@ public class HospitalServiceImpl implements HospitalService {
         //通过hosCode查询医院信息
         Hospital hospital = hospitalRepository.getHospitalByHoscode(hoscode);
         if(null != hospital) {
+            //返回医院名字
             return hospital.getHosname();
         }
         return "";
     }
 
+    //根据医院名称查询
+    @Override
+    public List<Hospital> findByHosname(String hosname) {
+        //从MongoDb中根据名字模糊查询
+        return hospitalRepository.findHospitalByHosnameLike(hosname);
+    }
+
+    @Override
+    public Map<String, Object> item(String hoscode) {
+        Map<String,Object> result =new HashMap<>();
+        //医院详情    getByHoscode(hoscode)根据医院编号获取医院详情  packHospital封装医院地址医院等级信息
+        Hospital hospital = this.packHospital(this.getByHoscode(hoscode));
+        result.put("hospital",hospital);
+        //预约规则
+        result.put("bookingRule",hospital.getBookingRule());
+        hospital.setBookingRule(null);
+        return result;
+    }
 
 
 }

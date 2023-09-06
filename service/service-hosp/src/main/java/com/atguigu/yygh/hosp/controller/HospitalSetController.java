@@ -19,6 +19,7 @@ import java.util.Random;
 
 @Api(tags = "医院设置管理")
 @RestController
+//跨域注解为了解决nginx跨域问题
 //@CrossOrigin
 @RequestMapping("/admin/hosp/hospitalSet")
 public class HospitalSetController {

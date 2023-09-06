@@ -1,4 +1,4 @@
-package com.atguigu.yygh.hosp.api;
+package com.atguigu.yygh.hosp.controller.api;
 
 import com.alibaba.excel.util.StringUtils;
 import com.atguigu.yygh.common.exception.YyghException;
@@ -11,7 +11,6 @@ import com.atguigu.yygh.hosp.service.HospitalService;
 import com.atguigu.yygh.hosp.service.HospitalSetService;
 import com.atguigu.yygh.hosp.service.ScheduleService;
 import com.atguigu.yygh.model.hosp.Department;
-import com.atguigu.yygh.model.hosp.Hospital;
 import com.atguigu.yygh.model.hosp.Schedule;
 import com.atguigu.yygh.vo.hosp.DepartmentQueryVo;
 import com.atguigu.yygh.vo.hosp.ScheduleQueryVo;
