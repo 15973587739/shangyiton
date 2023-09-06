@@ -10,6 +10,8 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.atguigu.yygh.common.exception.YyghException;
+import com.atguigu.yygh.common.result.ResultCodeEnum;
 import com.atguigu.yygh.msm.service.MsmService;
 import com.atguigu.yygh.msm.util.ConstantPropertiesUtils;
 import org.springframework.stereotype.Service;
@@ -19,12 +21,15 @@ import java.util.Map;
 
 @Service
 public class MsmServiceImpl implements MsmService {
+
+
     @Override
     public boolean send(String phone, String code) {
         //判断手机号是否为空
-        if(StringUtils.isEmpty(phone)) {
-            return false;
+        if (StringUtils.isEmpty(phone)) {
+            throw new YyghException(ResultCodeEnum.SERVICE_ERROR);
         }
+
         //整合阿里云短信服务
         //设置相关参数
         DefaultProfile profile = DefaultProfile.
@@ -42,12 +47,12 @@ public class MsmServiceImpl implements MsmService {
         //手机号
         request.putQueryParameter("PhoneNumbers", phone);
         //签名名称
-        request.putQueryParameter("SignName", "我的谷粒在线教育网站");
+        request.putQueryParameter("SignName", "阿里云短信测试");
         //模板code
-        request.putQueryParameter("TemplateCode", "SMS_180051135");
-        //验证码  使用json格式   {"code":"123456"}
-        Map<String,Object> param = new HashMap();
-        param.put("code",code);
+        request.putQueryParameter("TemplateCode", "SMS_154950909");
+        //验证码  使用json格式   {"code":"1234"}
+        Map<String, Object> param = new HashMap();
+        param.put("code", code);
         request.putQueryParameter("TemplateParam", JSONObject.toJSONString(param));
 
         //调用方法进行短信发送
@@ -55,12 +60,20 @@ public class MsmServiceImpl implements MsmService {
             CommonResponse response = client.getCommonResponse(request);
             System.out.println(response.getData());
             return response.getHttpResponse().isSuccess();
-        } catch (ServerException e) {
-            e.printStackTrace();
         } catch (ClientException e) {
             e.printStackTrace();
         }
         return false;
     }
+
+//    @Override
+//    public boolean send(MsmVo msmVo) {
+//        if(!StringUtils.isEmpty(msmVo.getPhone())) {
+//            String code = (String)msmVo.getParam().get("code");
+//            return this.sendCode(msmVo.getPhone(),code);
+//        }
+//        return false;
+//    }
+
 }
 

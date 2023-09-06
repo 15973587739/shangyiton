@@ -36,12 +36,6 @@ public class MsmApiController {
         }
         //如果从redis获取不到，
 
-        //校验校验验证码
-        String mobleCode = redisTemplate.opsForValue().get(phone);
-        if(!code.equals(mobleCode)) {
-            throw new YyghException(ResultCodeEnum.CODE_ERROR);
-        }
-
         // 生成验证码，
         code = RandomUtil.getSixBitRandom();
         //调用service方法，通过整合短信服务进行发送
