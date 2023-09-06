@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan("com.atguigu.yygh.hosp.mapper")
-public class CmnConfig {
+public class HospConfig {
     /**
      * 分页插件
      */
