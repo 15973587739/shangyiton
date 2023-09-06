@@ -13,6 +13,7 @@
         <module>service-hosp</module>
         <module>service-user</module>
         <module>service_cmn</module>
+        <module>service-msm</module>
     </modules>
     <dependencies>
 <!--        导入实体服务依赖-->
