@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
+//操作排班的MongoDb库
 @Repository
 public interface ScheduleRepository extends MongoRepository<Schedule,String> {
     Schedule getScheduleByHoscodeAndHosScheduleId(String hoscode, String hosScheduleId);

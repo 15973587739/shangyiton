@@ -4,11 +4,9 @@ import com.atguigu.yygh.model.hosp.Hospital;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
 import java.util.List;
 
-
+//操作医院信息的MongoDB库
 @Repository
 public interface HospitalRepository extends MongoRepository<Hospital, String> {
 
