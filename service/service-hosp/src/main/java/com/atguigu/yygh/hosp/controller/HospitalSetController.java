@@ -4,7 +4,6 @@ import com.atguigu.yygh.common.utility.MD5;
 import com.atguigu.yygh.common.result.Result;
 import com.atguigu.yygh.model.hosp.Hospital;
 import com.atguigu.yygh.model.hosp.HospitalSet;
-//import com.atguigu.yygh.hosp.eitity.HospitalSet;
 import com.atguigu.yygh.hosp.service.HospitalSetService;
 import com.atguigu.yygh.vo.hosp.HospitalSetQueryVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
