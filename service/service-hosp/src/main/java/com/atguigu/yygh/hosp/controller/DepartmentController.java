@@ -18,7 +18,7 @@ import java.util.Map;
 //请求路径注解
 @RequestMapping("/admin/hosp/department")
 //跨域注解
-@CrossOrigin
+//@CrossOrigin
 public class DepartmentController {
 
     @Autowired

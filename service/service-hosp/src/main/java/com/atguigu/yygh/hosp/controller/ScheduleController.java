@@ -15,7 +15,7 @@ import java.util.Map;
 //请求路径注解
 @RequestMapping("/admin/hosp/schedule")
 //跨域注解
-@CrossOrigin
+//@CrossOrigin
 public class ScheduleController {
 
     @Autowired
