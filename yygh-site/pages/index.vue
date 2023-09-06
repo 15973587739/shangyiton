@@ -154,15 +154,15 @@ import hosp from "../api/hosp";
 import dict from "../api/dict";
 export default {
   // 服务端渲染
-  // asyncData({ params, error }){
-  //   return hosp.getPageList(1, 10, null).then(resp =>{
-  //     return {
-  //       // 这里使用这样的方式return出去就相当于在data中定义了属性
-  //       list:resp.data.content,
-  //       page:resp.data.totalPages
-  //     }
-  //   })
-  // },
+  asyncData({ params, error }){
+    return hosp.getPageList(1, 10, null).then(resp =>{
+      return {
+        // 这里使用这样的方式return出去就相当于在data中定义了属性
+        list:resp.data.content,
+        page:resp.data.totalPages
+      }
+    })
+  },
   data(){
     return{
       searchObj: {},

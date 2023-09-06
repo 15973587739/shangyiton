@@ -16,6 +16,7 @@ import java.util.List;
 @Api(value = "数据字典接口")
 @RestController
 @RequestMapping("/admin/cmn/dict")
+//跨域注解为了解决nginx跨域问题
 //@CrossOrigin
 public class DictController {
 

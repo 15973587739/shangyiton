@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 //请求路径注解
 @RequestMapping("/admin/hosp/department")
-//跨域注解
+//跨域注解为了解决nginx跨域问题
 //@CrossOrigin
 public class DepartmentController {
 
