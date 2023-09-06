@@ -49,8 +49,8 @@ public class HospitalController {
     }
 
     @ApiOperation(value = "获取医院详情")
-    @GetMapping("show/{id}")
-    public Result show(
+    @GetMapping("showHospDetail/{id}")
+    public Result showHospDetail(
             @ApiParam(name = "id", value = "医院id", required = true)
             @PathVariable String id) {
         return Result.ok(hospitalService.show(id));

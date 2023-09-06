@@ -102,15 +102,16 @@ public class ScheduleServiceImpl implements ScheduleService {
         //1 根据医院编号 和 科室编号 查询
         Criteria criteria = Criteria.where("hoscode").is(hoscode).and("depcode").is(depcode);
 
-        //2 根据工作日workDate期进行分组
+        //2 根据工作日workDate期进行分组 查询出每个工作日的时间科室可预约的总数和剩余预约数（查询条件）
+        // Aggregation：mongoDb提供的类用于聚合操作比如分组求和等等。
         Aggregation agg = Aggregation.newAggregation(
-                Aggregation.match(criteria),//匹配条件
-                Aggregation.group("workDate")//分组字段
-                        .first("workDate").as("workDate")
+                Aggregation.match(criteria),//分组匹配条件
+                Aggregation.group("workDate")//需要分组的字段
+                        .first("workDate").as("workDate")//分组后日期的别名
                         //3 统计号源数量
-                        .count().as("docCount")
-                        .sum("reservedNumber").as("reservedNumber")
-                        .sum("availableNumber").as("availableNumber"),
+                        .count().as("docCount")   //就诊医生人数
+                        .sum("reservedNumber").as("reservedNumber") //求科室可预约数总和
+                        .sum("availableNumber").as("availableNumber"), //求科室剩余可预约数总和
                 //排序
                 Aggregation.sort(Sort.Direction.DESC,"workDate"),
                 //4 实现分页
@@ -119,14 +120,16 @@ public class ScheduleServiceImpl implements ScheduleService {
         );
         //调用方法，最终执行
         AggregationResults<BookingScheduleRuleVo> aggResults =
+                //第一个参数agg为查询条件，第二个参数封装实体类的class对象（从mongo中查出来的类型），第三个参数为最终返回的参数
                 mongoTemplate.aggregate(agg, Schedule.class, BookingScheduleRuleVo.class);
         List<BookingScheduleRuleVo> bookingScheduleRuleVoList = aggResults.getMappedResults();
 
-        //分组查询的总记录数
+        //分组查询的总记录数分页所需的数据
         Aggregation totalAgg = Aggregation.newAggregation(
-                Aggregation.match(criteria),
-                Aggregation.group("workDate")
+                Aggregation.match(criteria), //查询条件
+                Aggregation.group("workDate") //根据workDate分组
         );
+        //最终执行 查询总记录数
         AggregationResults<BookingScheduleRuleVo> totalAggResults =
                 mongoTemplate.aggregate(totalAgg,
                         Schedule.class, BookingScheduleRuleVo.class);
@@ -135,11 +138,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         //把日期对应星期获取
         for(BookingScheduleRuleVo bookingScheduleRuleVo:bookingScheduleRuleVoList) {
             Date workDate = bookingScheduleRuleVo.getWorkDate();
+            //getDayOfWeek工具方法转换成周几
             String dayOfWeek = this.getDayOfWeek(new DateTime(workDate));
             bookingScheduleRuleVo.setDayOfWeek(dayOfWeek);
         }
 
-        //设置最终数据，进行返回
+        //设置最终数据
         Map<String, Object> result = new HashMap<>();
         result.put("bookingScheduleRuleList",bookingScheduleRuleVoList);
         result.put("total",total);
@@ -149,6 +153,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         //其他基础数据
         Map<String, String> baseMap = new HashMap<>();
         baseMap.put("hosname",hosName);
+        //添加到最终数据中
         result.put("baseMap",baseMap);
 
         return result;
@@ -188,6 +193,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     //根据医院编号 、科室编号和工作日期，查询排班详细信息
+    //hoscode医院编号 depcode科室编号 workDate工作期
     @Override
     public List<Schedule> getDetailSchedule(String hoscode, String depcode, String workDate) {
         //根据参数查询mongodb

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -105,24 +106,31 @@ public class HospitalServiceImpl implements HospitalService {
         hospital.getParam().put("fullAddress", provinceString + cityString + districtString + hospital.getAddress());
         return hospital;
     }
-
+    //根据传过来的status值进行修改状态
     @Override
     public void updateStatus(String id, Integer status) {
+       //判断status值是否合理
         if(status.intValue() == 0 || status.intValue() == 1) {
+            //根据id从MongoDB中获取Hospital对象
             Hospital hospital = hospitalRepository.findById(id).get();
+            //将新的status赋值
             hospital.setStatus(status);
+            //修改时间
             hospital.setUpdateTime(new Date());
+            //调用save方法进行修改
             hospitalRepository.save(hospital);
         }
     }
 
     @Override
     public Map<String, Object> show(String id) {
+        //将数据封装到map集合中做返回值返回出去
         Map<String, Object> result = new HashMap<>();
-
+        //从MongoDB中根据id查询出一个Optional对象
+//        Optional optional = hospitalRepository.findById(id);
+        //通过get()方法获取一个Hospital对象然后调用packHospital方法获取到医院等级信息以及地区信息
         Hospital hospital = this.packHospital(hospitalRepository.findById(id).get());
         result.put("hospital", hospital);
-
         //单独处理更直观
         result.put("bookingRule", hospital.getBookingRule());
         //不需要重复返回
@@ -132,6 +140,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public String getHospName(String hoscode) {
+        //通过hosCode查询医院信息
         Hospital hospital = hospitalRepository.getHospitalByHoscode(hoscode);
         if(null != hospital) {
             return hospital.getHosname();
