@@ -10,4 +10,6 @@ public interface UserInfoService extends IService<UserInfo> {
     //会员登录
     Map<String, Object> login(LoginVo loginVo);
 
+    UserInfo selectWxInfoOpenId(String openid);
+
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConstantPropertiesUtils implements InitializingBean {
 
+
     @Value("${aliyun.sms.regionId}")
     private String regionId;
 
@@ -15,6 +16,8 @@ public class ConstantPropertiesUtils implements InitializingBean {
 
     @Value("${aliyun.sms.secret}")
     private String secret;
+
+
 
     public static String REGION_Id;
     public static String ACCESS_KEY_ID;

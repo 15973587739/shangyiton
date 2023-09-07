@@ -39,27 +39,45 @@ public class UserInfoServiceImpl extends
             throw new YyghException(ResultCodeEnum.CODE_ERROR);
         }
 
-
-        //手机号已被使用
-        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("phone", phone);
-        //获取会员
-        UserInfo userInfo = baseMapper.selectOne(queryWrapper);
-        if(null == userInfo) {
-            userInfo = new UserInfo();
-            userInfo.setName("");
-            userInfo.setPhone(phone);
-            userInfo.setStatus(1);
-            this.save(userInfo);
+        //绑定手机号码
+        UserInfo userInfo = null;
+        //如果openid有值不为空就去数据库查   微信绑定登录  前端根据openid判断是否是微信登录
+        if(!StringUtils.isEmpty(loginVo.getOpenid())) {
+            userInfo = this.selectWxInfoOpenId(loginVo.getOpenid());
+            //如果有就把手机号绑定
+            if(null != userInfo) {
+                userInfo.setPhone(loginVo.getPhone());
+                this.updateById(userInfo);
+            } else {
+                throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            }
         }
+
+        //如果userinfo为空，进行正常手机登录
+        if(userInfo == null) {
+            //判断是否第一次登录：根据手机号查询数据库，如果不存在相同手机号就是第一次登录
+            QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+            wrapper.eq("phone",phone);
+            userInfo = baseMapper.selectOne(wrapper);
+            if(userInfo == null) { //第一次使用这个手机号登录
+                //添加信息到数据库
+                userInfo = new UserInfo();
+                userInfo.setName("");
+                userInfo.setPhone(phone);
+                userInfo.setStatus(1);
+                baseMapper.insert(userInfo);
+            }
+        }
+
         //校验是否被禁用
         if(userInfo.getStatus() == 0) {
             throw new YyghException(ResultCodeEnum.LOGIN_DISABLED_ERROR);
         }
 
-        //TODO 记录登录
-
-        //返回页面显示名称
+        //不是第一次，直接登录
+        //返回登录信息
+        //返回登录用户名
+        //返回token信息
         Map<String, Object> map = new HashMap<>();
         String name = userInfo.getName();
         if(StringUtils.isEmpty(name)) {
@@ -68,13 +86,20 @@ public class UserInfoServiceImpl extends
         if(StringUtils.isEmpty(name)) {
             name = userInfo.getPhone();
         }
-        map.put("name", name);
-        map.put("token", "");
+        map.put("name",name);
+
         //jwt生成token字符串
         String token = JwtHelper.createToken(userInfo.getId(), name);
         map.put("token",token);
-
         return map;
+    }
+
+    @Override
+    public UserInfo selectWxInfoOpenId(String openid) {
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("openid",openid);
+        UserInfo userInfo = baseMapper.selectOne(queryWrapper);
+        return userInfo;
     }
 
 }
