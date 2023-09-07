@@ -14,6 +14,7 @@
         <module>service-user</module>
         <module>service_cmn</module>
         <module>service-msm</module>
+        <module>service-order</module>
     </modules>
     <dependencies>
 <!--        导入实体服务依赖-->
